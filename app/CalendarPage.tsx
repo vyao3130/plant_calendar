@@ -8,7 +8,7 @@ const CalendarPage = () => {
   return(
     <div className="mt-16 flex flex-col items-center">
       <h1 className="text-5xl">🌱 Plant Calendar 🌱</h1>
-      <p> Some content</p>
+      <p> {"Never forget when you're supposed to start planting!"}</p>
       <Calendar value={currentDate} onChange={setCurrentDate}/>
     </div>    
   )

@@ -63,9 +63,9 @@ const Calendar: React.FC<Props> = ({value = new Date(), onChange}) => {
                 
         <div className="pt-7 grid grid-cols-7 items-center
             justify-center text-center">
-            <Cell className="col-span-2">Spring Frost Date</Cell>
+            <Cell className="col-span-2"> 🌸 Spring Frost Date</Cell>
             <Cell className="col-span-3" onClick={currentDate}>Go To Today</Cell>
-            <Cell className="col-span-2">Fall Frost Date</Cell>
+            <Cell className="col-span-2">🍂 Fall Frost Date</Cell>
         </div>
     </div>
     
