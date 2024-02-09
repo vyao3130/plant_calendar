@@ -12,7 +12,7 @@ interface Props{
 
 const Calendar: React.FC<Props> = ({value = new Date(), onChange}) => {
 
-    const newDate = new Date();
+    const currDate = new Date();
     const startDate = startOfMonth(value);
     const endDate = endOfMonth(value);
     const numDays = differenceInDays(endDate, startDate) + 1;
@@ -25,12 +25,15 @@ const Calendar: React.FC<Props> = ({value = new Date(), onChange}) => {
     const nextMonth = () => onChange && onChange(add(value, {months:1}));
     const nextYear = () => onChange && onChange(add(value, {years:1}));
 
-    const currentDate = () => onChange && onChange(newDate);
-
+    const currentDate = () => onChange && onChange(currDate);
+    const dayToday = currDate.getDate();
     const dateFormatted = format(value, "MMMM yyy");
-    if(true)
+    
+    // Make an array of days - if the current month is being displayed, add the true/false 
+    var calendarDays = Array.from({length:numDays}).map((_, index) => (false));
+    if(currDate.getMonth() == value.getMonth())
     {
-        console.log("SDFJDLSF")
+        calendarDays = Array.from({length:numDays}).map((_, index) => (index === dayToday-1));
     }
     
     return <div>
@@ -52,9 +55,14 @@ const Calendar: React.FC<Props> = ({value = new Date(), onChange}) => {
                 <Cell key={index}/>
             ))}
 
-            {Array.from({length: numDays}).map((_, index) =>(
-                <Cell key={index}>{index+1}</Cell>
+            {calendarDays.map((num, index) => (
+                <Cell key={index} today={num}>
+                    {index + 1}
+                </Cell>
             ))}
+            {/* {Array.from({length: numDays}).map((_, index) =>(
+                <Cell key={index}>{index+1}</Cell>
+            ))} */}
 
             {Array.from({length: postfixDays}).map((_, index) => (
                 <Cell key={index}/>
