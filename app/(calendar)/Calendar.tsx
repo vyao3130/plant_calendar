@@ -1,7 +1,9 @@
-import { add, differenceInDays, endOfMonth, format, startOfMonth, sub } from "date-fns";
+import { add, differenceInDays, endOfMonth, format, isDate, startOfMonth, sub } from "date-fns";
 import Cell from "./Cell";
 
-const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"]
+const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
+const springFrostDate = new Date(2024, 10, 11);
+const fallFrostDate = new Date(2024, 10, 12);
 
 interface Props{
     value?: Date;
@@ -9,9 +11,8 @@ interface Props{
 }
 
 
-
 const Calendar: React.FC<Props> = ({value = new Date(), onChange}) => {
-
+    
     const currDate = new Date();
     const startDate = startOfMonth(value);
     const endDate = endOfMonth(value);
@@ -26,8 +27,13 @@ const Calendar: React.FC<Props> = ({value = new Date(), onChange}) => {
     const nextYear = () => onChange && onChange(add(value, {years:1}));
 
     const currentDate = () => onChange && onChange(currDate);
+    const springDate = () => onChange && onChange(springFrostDate);
+    const fallDate = () => onChange && onChange(fallFrostDate);
     const dayToday = currDate.getDate();
     const dateFormatted = format(value, "MMMM yyy");
+
+    console.log(springFrostDate);
+    console.log(fallFrostDate);
     
     // Make an array of days - if the current month is being displayed, add the true/false 
     var calendarDays = Array.from({length:numDays}).map((_, index) => (false));
@@ -71,9 +77,9 @@ const Calendar: React.FC<Props> = ({value = new Date(), onChange}) => {
                 
         <div className="pt-7 grid grid-cols-7 items-center
             justify-center text-center">
-            <Cell className="col-span-2"> 🌸 Spring Frost Date</Cell>
+            <Cell className="col-span-2"onClick={springDate}> 🌸 Spring Frost Date</Cell>
             <Cell className="col-span-3" onClick={currentDate}>Go To Today</Cell>
-            <Cell className="col-span-2">🍂 Fall Frost Date</Cell>
+            <Cell className="col-span-2" onClick={fallDate}>🍂 Fall Frost Date</Cell>
         </div>
     </div>
     
