@@ -7,11 +7,21 @@ const fallFrostDate = new Date(2024, 10, 12);
 
 interface Props{
     value?: Date;
+    springFDate?: Date;
+    fallFDate?: Date;
     onChange?: (value:Date) => void;
 }
 
+function makeArrayCal(date : Date, value : Date, calendarDays : Array<boolean>){
 
-const Calendar: React.FC<Props> = ({value = new Date(), onChange}) => {
+    if(date.getMonth() == value.getMonth())
+    {
+        calendarDays[date.getDate()-1] = true;
+    }
+    return calendarDays
+}
+
+const Calendar: React.FC<Props> = ({fallFDate = new Date(), springFDate = new Date(), value = new Date(), onChange}) => {
     
     const currDate = new Date();
     const startDate = startOfMonth(value);
@@ -27,19 +37,25 @@ const Calendar: React.FC<Props> = ({value = new Date(), onChange}) => {
     const nextYear = () => onChange && onChange(add(value, {years:1}));
 
     const currentDate = () => onChange && onChange(currDate);
-    const springDate = () => onChange && onChange(springFrostDate);
-    const fallDate = () => onChange && onChange(fallFrostDate);
-    const dayToday = currDate.getDate();
+    const springDate = () => onChange && onChange(springFDate);
+    const fallDate = () => onChange && onChange(fallFDate);
     const dateFormatted = format(value, "MMMM yyy");
 
-    console.log(springFrostDate);
-    console.log(fallFrostDate);
     
     // Make an array of days - if the current month is being displayed, add the true/false 
+    // var calendarDays = Array.from({length:numDays}).map((_, index) => (false));
     var calendarDays = Array.from({length:numDays}).map((_, index) => (false));
     if(currDate.getMonth() == value.getMonth())
     {
-        calendarDays = Array.from({length:numDays}).map((_, index) => (index === dayToday-1));
+        calendarDays[currDate.getDate()-1] = true;
+    }
+    if(springFDate.getMonth() == value.getMonth())
+    {
+        calendarDays[springFDate.getDate()-1] = true;
+    }
+    if(fallFDate.getMonth() == value.getMonth())
+    {
+        calendarDays[fallFDate.getDate()-1] = true;
     }
     
     return <div>
